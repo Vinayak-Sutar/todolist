@@ -1,0 +1,30 @@
+app.get("/", async function(req, res) {
+
+const day = date.getDate();
+
+const items = await Item.find();
+
+res.render("list", {listTitle: day, newListItems: items});
+
+});
+
+
+app.post("/", function(req, res){
+
+  const itemName = req.body.newItem;
+
+  const newItemName = new Item({
+    task:itemName
+  });
+
+  newItemName.save();
+  res.redirect("/");
+});
+
+
+// var str="item";
+//  const nameItem=name+str;
+//   nameItem = mongoose.model("Item",itemsSchema);
+//   const newIt=new nameItem({
+    
+//   })
