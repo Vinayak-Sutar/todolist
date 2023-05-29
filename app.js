@@ -17,6 +17,8 @@ app.use(express.static("public"));
 main().catch(err => console.log(err));
 async function main() {
 mongoose.connect("mongodb+srv://hilariousheisenberg:skylerwhite@cluster0.mq31mxi.mongodb.net/todolistDB");
+// await mongoose.connect('mongodb://127.0.0.1:27017/blogWebSiteDB');
+
 
 const itemsSchema =new mongoose.Schema({
   task : String
@@ -74,15 +76,16 @@ await Item.insertMany(defaultItems);
 // // console.log(items[0].name);
 
 
+day=await date.getDate();
 
-
-const day=date.getDate();;
 
 app.get("/", async function(req, res) {
 
+ day=await date.getDate();
  
 
 const items = await Item.find();
+console.log(day);
 
 res.render("list", {listTitle: day, newListItems: items});
 
@@ -130,6 +133,11 @@ app.post("/delete",async (req,res)=>{
 
 })
 
+
+app.post("/listCreation",(req,res)=>{
+  res.redirect("/lists/"+req.body.newItem);
+})
+
 app.get("/lists/:customListName",async(req,res)=>{
   // console.log(req.params.customListName);
   const customListName = _.capitalize(req.params.customListName);
@@ -155,6 +163,10 @@ app.get("/lists/:customListName",async(req,res)=>{
 
   }
 });
+
+app.get("/listSelect",(req,res)=>{
+  res.render("listSelect");
+})
 
 
 
@@ -189,9 +201,6 @@ app.get("/lists/:customListName",async(req,res)=>{
 // });
 
 
-app.get("/work", function(req,res){
-  res.render("list", {listTitle: "Work List", newListItems: workItems});
-});
 
 app.get("/about", function(req, res){
   res.render("about");

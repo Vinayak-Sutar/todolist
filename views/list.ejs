@@ -1,9 +1,13 @@
 <%- include("header") -%>
 
+<div>
+  <a href="/listSelect">Change list</a>
+</div>
+
+
   <div class="box" id="heading">
     <h1> <%= listTitle %> </h1>
   </div>
-
   <div class="box">
     <!-- <% for (let i=0; i<newListItems.length; i++) { %>
       <div class="item">
@@ -11,11 +15,13 @@
         <p><%=  newListItems[i].task  %></p>
       </div>
       <% } %> -->
+
+
       <% newListItems.forEach(element => { %>
         <form action="/delete" method="post">
           <div class="item">
             <input type="checkbox" name = "checkbox" value="<%=element._id%>" onchange="this.form.submit()" >
-            <p><%=  element.task  %></p>
+            <p><%=  element.task  %></p>  
           </div>
           <input type="hidden" name="listName" value="<%=listTitle%>"></input>
         </form>
